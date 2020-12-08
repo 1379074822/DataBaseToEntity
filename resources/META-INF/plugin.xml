@@ -1,0 +1,44 @@
+<idea-plugin>
+  <id>yccccc001</id>
+  <name>数据库实体类转换工具</name>
+  <version>1.1</version>
+  <vendor email="a1379074822@163.com" url="http://www.yourcompany.com">yc编码自用</vendor>
+
+  <description><![CDATA[
+      自用数据库转实体类大小写更替.<br>
+      <em>mysql</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+     无.<br>
+      <em>mysql</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+    <action id="DataBaseToEntity.Translate" class="com.lian.DataTranslate" text="DataBaseToEntity"
+            description="将数据库字段转换为应用实体名（_a To A)">
+      <add-to-group group-id="EditMenu" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt shift k"/>
+    </action>
+    <action id="AsTranslate" class="com.lian.AsTranslate" text="AsTranslate" description="数据库字段名 自动添加 as （驼峰）">
+      <add-to-group group-id="MainMenu" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt p"/>
+    </action>
+  </actions>
+
+</idea-plugin>
