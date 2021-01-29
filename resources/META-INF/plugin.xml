@@ -37,7 +37,10 @@
     </action>
     <action id="AsTranslate" class="com.lian.AsTranslate" text="AsTranslate" description="数据库字段名 自动添加 as （驼峰）">
       <add-to-group group-id="MainMenu" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="shift alt p"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt O"/>
+    </action>
+    <action id="PastTransfer" class="com.lian.PastTransfer" text="PastTransfer" description="粘贴的sql数据库字段名 自动添加 as （驼峰）">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt P"/>
     </action>
   </actions>
 
