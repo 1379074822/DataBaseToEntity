@@ -1,17 +1,20 @@
 <idea-plugin>
   <id>yccccc001</id>
   <name>数据库实体类转换工具</name>
-  <version>1.1</version>
+  <version>3.0</version>
   <vendor email="a1379074822@163.com" url="http://www.yourcompany.com">yc编码自用</vendor>
 
   <description><![CDATA[
       自用数据库转实体类大小写更替.<br>
-      <em>mysql</em>
+      alt+shitf+k  将数据库字段转换为应用实体名（_a To A)<br>
+      alt+shitf+O  数据库字段名 自动添加 as （驼峰）<br>
+      alt+shitf+P  粘贴的sql数据库字段名 自动添加 as （驼峰）<br>
+      alt+shitf+;(分号) 生成where条件
     ]]></description>
 
   <change-notes><![CDATA[
-     无.<br>
-      <em>mysql</em>
+     3.0.<br>
+
     ]]>
   </change-notes>
 
@@ -41,6 +44,9 @@
     </action>
     <action id="PastTransfer" class="com.lian.PastTransfer" text="PastTransfer" description="粘贴的sql数据库字段名 自动添加 as （驼峰）">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt P"/>
+    </action>
+    <action id="GenWhereTrans" class="com.lian.GenWhereTrans" text="GenWhereTrans" description="生成where条件">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt SEMICOLON"/>
     </action>
   </actions>
 
