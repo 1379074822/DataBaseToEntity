@@ -2,15 +2,15 @@ package com.lian;
 
 public enum MysqlEnum {
     A("VARCHAR", "String"),
-    B("CHAR", "String"),
+    B("CHAR", "Char"),
     C("BLOB", "Byte"),
     D("VARCHAR", "String"),
-    E("INTEGER", "Long"),
+    E("INTEGER", "Integer"),
     F("TINYINT", "Integer"),
     G("SMALLINT", "Integer"),
     H("MEDIUMINT", "Integer"),
     I("BIT", "Boolean"),
-    J("BIGINT", "BigInteger"),
+    J("BIGINT", "Long"),
     K("FLOAT", "Float"),
     L("DOUBLE", "Double"),
     M("DECIMAL", "BigDecimal"),
@@ -31,7 +31,7 @@ public enum MysqlEnum {
 
     public static String getJavaByCode(String code) {
         for (MysqlEnum value : MysqlEnum.values()) {
-            if (value.code == code) {
+            if (value.code.toLowerCase().trim().equals(code.toLowerCase().trim())) {
                 return value.java;
             }
         }
