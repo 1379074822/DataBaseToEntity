@@ -10,6 +10,7 @@
       alt+shitf+O  数据库字段名 自动添加 as （驼峰）<br>
       alt+shitf+P  粘贴的sql数据库字段名 自动添加 as （驼峰）<br>
       alt+shitf+;(分号) 生成where条件
+      alt+shitf+"(引号) 生成带@column实体
     ]]></description>
 
   <change-notes><![CDATA[
@@ -47,6 +48,12 @@
     </action>
     <action id="GenWhereTrans" class="com.lian.GenWhereTrans" text="GenWhereTrans" description="生成where条件">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt SEMICOLON"/>
+    </action>
+    <action id="DOGen" class="com.lian.DOGen" text="DOGen" description="DOGen">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt QUOTE"/>
+    </action>
+    <action id="NoDoGen" class="com.lian.NoDoGen" text="NoDoGen" description="无注解">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt OPEN_BRACKET"/>
     </action>
   </actions>
 
