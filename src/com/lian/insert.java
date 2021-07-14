@@ -4,59 +4,71 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.application.ex.ClipboardUtil;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import org.apache.http.util.TextUtils;
 
-public class GenWhereTrans extends AnAction {
+import java.util.ArrayList;
 
+public class insert extends AnAction {
     @Override
-    @SuppressWarnings("Duplicates")
     public void actionPerformed(AnActionEvent e) {
         final Project project = e.getRequiredData(CommonDataKeys.PROJECT);
         final Editor mEditor = e.getData(PlatformDataKeys.EDITOR);
-        if (null == mEditor) {
+        String textInClipboard = ClipboardUtil.getTextInClipboard();
+        if (null == textInClipboard || "".equals(textInClipboard)) {
             return;
         }
         SelectionModel model = mEditor.getSelectionModel();
         final String selectedText = model.getSelectedText();
-        if (TextUtils.isEmpty(selectedText)) {
-            return;
-        }
+
         final Document document = mEditor.getDocument();
+        // Work off of the primary caret to get the selection info
         Caret primaryCaret = mEditor.getCaretModel().getPrimaryCaret();
         int start = primaryCaret.getSelectionStart();
         int end = primaryCaret.getSelectionEnd();
-        String[] split = selectedText.split("\n");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\twhere\n\t1=1\n");
-        for (int i = 0; i < split.length; i++) {
-            String s = upperTable(split[i].trim());
-            String ss = split[i];
+        String[] split1 = textInClipboard.split("TABLE")[1].split("\\(\n");
+        String tableName = split1[0];
+        String[] split2 = split1[1].split("PRIMARY")[0].trim().split("\n");
 
-                stringBuilder.append("\t");
-
-            stringBuilder.append("<if test=\"").append(s).append(" != null");
-            if(!s.toLowerCase().contains("time")&&!s.toLowerCase().contains("date")){
-                stringBuilder.append(" and ").append(s).append("!= ''");
-            }
-            stringBuilder.append("\">\n\t\tand ").append(ss.trim()).append(" = #{").append(s).append("}\n");
-            stringBuilder.append("\t</if>\n");
+        ArrayList<String> strings = new ArrayList<>();
+        for (String s : split2) {
+            String s1 = s.split("`")[1];
+            strings.add(s1);
         }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\tinsert into  ").append(tableName).append("\n\t(");
+        for (int i = 0; i < strings.size(); i++) {
+            stringBuilder.append("\t").append("`").append(strings.get(i).trim()).append("`");
+            if(i!=strings.size()-1){
+                stringBuilder.append(",");
+            }
+            if(i%4==0&&i!=0){
+                stringBuilder.append("\n");
+            }
+        }
+        stringBuilder.append("\t)\n").append("\tvalues(\n");
+        for (int i = 0; i < strings.size(); i++) {
+            String s = upperTable(strings.get(i).trim());
+            stringBuilder.append("\t").append("#{").append(s).append("}");
+            if(i!=strings.size()-1){
+                stringBuilder.append(",");
+            }
+            if(i%4==0&&i!=0){
+                stringBuilder.append("\n");
+            }
+        }
+        stringBuilder.append("\t)");
         WriteCommandAction.runWriteCommandAction(project, () ->
                 document.replaceString(start, end, stringBuilder)
         );
 
 
-
     }
-
-
-
 
     @SuppressWarnings("Duplicates")
     public static String upperTable(String str) {
@@ -93,7 +105,4 @@ public class GenWhereTrans extends AnAction {
         }
         return String.valueOf(ch);
     }
-
-
-
 }

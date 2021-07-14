@@ -48,13 +48,14 @@ public class DOGen extends AnAction {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < strings.size(); i++) {
             String s = upperTable(strings.get(i).trim());
-            if (strings.get(i) == "id") {
-                stringBuilder.append("/**\n" + "     * ").append(strings2.get(i)).append("\n").append("     */\n").append("@Column(name = \"").append(strings.get(i)).append("\")\n")
-                        .append("@Id\n" +
+                stringBuilder.append("\t");
+            if (strings.get(i).equals("id") ) {
+                stringBuilder.append("/**\n" + "     * ").append(strings2.get(i)).append("\n").append("     */\n").append("\t@Column(name = \"").append(strings.get(i)).append("\")\n")
+                        .append("\t@Id\n" +
                                 "    @GeneratedValue(generator = \"JDBC\")\n").append("private ").append(MysqlEnum.getJavaByCode(strings3.get(i))).append("  ").append(s).append(";\n");
             } else {
-                stringBuilder.append("/**\n" + "     * ").append(strings2.get(i)).append("\n").append("     */\n").append("@Column(name = \"").append(strings.get(i)).append("\")\n")
-                        .append("private ").append(MysqlEnum.getJavaByCode(strings3.get(i))).append("  ").append(s).append(";\n");
+                stringBuilder.append("/**\n" + "     * ").append(strings2.get(i)).append("\n").append("     */\n").append("\t@Column(name = \"").append(strings.get(i)).append("\")\n")
+                        .append("\tprivate ").append(MysqlEnum.getJavaByCode(strings3.get(i))).append("  ").append(s).append(";\n");
             }
 
         }

@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>yccccc001</id>
   <name>数据库实体类转换工具</name>
-  <version>3.0</version>
+  <version>3.3</version>
   <vendor email="a1379074822@163.com" url="http://www.yourcompany.com">yc编码自用</vendor>
 
   <description><![CDATA[
@@ -9,12 +9,12 @@
       alt+shitf+k  将数据库字段转换为应用实体名（_a To A)<br>
       alt+shitf+O  数据库字段名 自动添加 as （驼峰）<br>
       alt+shitf+P  粘贴的sql数据库字段名 自动添加 as （驼峰）<br>
-      alt+shitf+;(分号) 生成where条件
-      alt+shitf+"(引号) 生成带@column实体
+      alt+shitf+;(分号) 生成where条件<br>
+      alt+shitf+"(引号) 生成带@column实体<br>
     ]]></description>
 
   <change-notes><![CDATA[
-     3.0.<br>
+     3.3.<br>
 
     ]]>
   </change-notes>
@@ -54,6 +54,9 @@
     </action>
     <action id="NoDoGen" class="com.lian.NoDoGen" text="NoDoGen" description="无注解">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt OPEN_BRACKET"/>
+    </action>
+    <action id="insert" class="com.lian.insert" text="insert" description="insert">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt Y"/>
     </action>
   </actions>
 

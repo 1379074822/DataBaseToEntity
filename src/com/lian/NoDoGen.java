@@ -47,9 +47,10 @@ public class NoDoGen extends AnAction {
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < strings.size(); i++) {
+                stringBuilder.append("\t");
             String s = upperTable(strings.get(i).trim());
             stringBuilder.append("/**\n" + "     * ").append(strings2.get(i)).append("\n").append("     */\n")
-                    .append("private ").append(MysqlEnum.getJavaByCode(strings3.get(i))).append("  ").append(s).append(";\n");
+                    .append("\tprivate ").append(MysqlEnum.getJavaByCode(strings3.get(i))).append("  ").append(s).append(";\n");
         }
         WriteCommandAction.runWriteCommandAction(project, () ->
                 document.replaceString(start, end, stringBuilder)

@@ -39,12 +39,11 @@ public class PastTransfer extends AnAction {
             String s1 = s.split("`")[1];
             strings.add(s1);
         }
-//        selectedText.split("\n");
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < strings.size(); i++) {
             String s = upperTable(strings.get(i).trim());
             String ss = strings.get(i) + " " + "AS" + " " + s;
-            stringBuilder.append(ss).append(i == (strings.size() - 1) ? "" : ",\n");
+            stringBuilder.append("\t").append(ss).append(i == (strings.size() - 1) ? "" : ",\n");
         }
         WriteCommandAction.runWriteCommandAction(project, () ->
                 document.replaceString(start, end, stringBuilder)
