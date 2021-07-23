@@ -41,33 +41,34 @@ public class insert extends AnAction {
             strings.add(s1);
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\tinsert into  ").append(tableName).append("\n\t(");
+        stringBuilder.append("\tinsert into  ").append(tableName).append("\n\t<trim prefix=\"(\" suffix=\")\">\n");
         for (int i = 0; i < strings.size(); i++) {
+            String s = upperTable(strings.get(i).trim());
+            stringBuilder.append("\t<if test=\"").append(s).append("!= null\">\n");
             stringBuilder.append("\t").append("`").append(strings.get(i).trim()).append("`");
             if(i!=strings.size()-1){
                 stringBuilder.append(",");
             }
-            if(i%4==0&&i!=0){
-                stringBuilder.append("\n");
-            }
+            stringBuilder.append("\n");
+            stringBuilder.append("\t</if>\n");
         }
-        stringBuilder.append("\t)\n").append("\tvalues(\n");
+        stringBuilder.append("\t</trim>\n");
+        stringBuilder.append("\t<trim prefix=\"values \">\n").append("\n\t<trim prefix=\"(\" suffix=\")\">\n");
         for (int i = 0; i < strings.size(); i++) {
             String s = upperTable(strings.get(i).trim());
+            stringBuilder.append("\t<if test=\"").append(s).append("!= null\">\n");
             stringBuilder.append("\t").append("#{").append(s).append("}");
             if(i!=strings.size()-1){
                 stringBuilder.append(",");
             }
-            if(i%4==0&&i!=0){
-                stringBuilder.append("\n");
-            }
+            stringBuilder.append("\n");
+            stringBuilder.append("\t</if>\n");
         }
-        stringBuilder.append("\t)");
+        stringBuilder.append("\t</trim>\n");
+        stringBuilder.append("\t</trim>");
         WriteCommandAction.runWriteCommandAction(project, () ->
                 document.replaceString(start, end, stringBuilder)
         );
-
-
     }
 
     @SuppressWarnings("Duplicates")
